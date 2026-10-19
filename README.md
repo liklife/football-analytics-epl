@@ -96,7 +96,7 @@ python scripts/run_pipeline.py
 
 После успешного выполнения:
 
-- `data/raw/E0.csv` — скачанный исходный файл;
+- `data/raw/E0.csv` — исходный CSV-файл сезона 2025/26, включённый в репозиторий;
 - `data/processed/E0_clear.csv` — очищенные данные;
 - `results/team_analysis.csv` — таблица метрик команд;
 - `results/shot_conversion.png` — график конверсии ударов;
@@ -108,8 +108,7 @@ python scripts/run_pipeline.py
 
 [Football-Data.co.uk — статистика английских лиг](https://www.football-data.co.uk/englandm.php).
 
-Используются дата матча, команды, голы, общее количество ударов и удары в створ. Исходный CSV не хранится в GitHub: при запуске он скачивается с источника. Перед повторным распространением исходных или обработанных данных следует учитывать условия использования Football-Data.co.uk.
-
+Используются дата матча, команды, голы, общее количество ударов и удары в створ. Исходный CSV-файл `data/raw/E0.csv` включён в репозиторий. Если файл отсутствует локально, скрипт пытается скачать его с Football-Data.co.uk.
 ## Ограничения
 
 - Конверсия ударов не учитывает качество голевых моментов и xG.
@@ -121,21 +120,22 @@ python scripts/run_pipeline.py
 
 ```text
 data/
-  raw/                 # исходный CSV, загружается при запуске
-  processed/           # очищенные данные
+├── raw/
+│   └── E0.csv              # исходные данные сезона 2025/26
+└── processed/              # очищенные данные
 scripts/
-  prepare_data.py      # подготовка данных
-  analyze_teams.py     # анализ команд
-  run_pipeline.py      # полный автоматический конвейер
+├── prepare_data.py         # подготовка данных
+├── analyze_teams.py        # анализ команд
+└── run_pipeline.py         # полный автоматический конвейер
 sql/
-  analysis_queries.sql
-  setup_database.sql
+├── analysis_queries.sql
+└── setup_database.sql
 results/
-  team_analysis.csv
-  shot_conversion.png
-  shots_vs_goals.png
+├── team_analysis.csv
+├── shot_conversion.png
+└── shots_vs_goals.png
 docs/
-  notes.docx
+└── notes.docx
 ```
 
 ## Статус проекта
