@@ -45,13 +45,26 @@ def prepare_data():
         "home_goals", "away_goals", "home_shots", "away_shots",
         "home_shots_on_target", "away_shots_on_target",
     ]
+
     for col in numeric:
         df[col] = pd.to_numeric(df[col], errors="coerce")
+
     if df.empty or df[numeric].isna().any().any():
         raise ValueError("CSV is empty or has missing/non-numeric match statistics.")
+
+    if (df[numeric] < 0).any().any():
+        raise ValueError("Match statistics cannot contain negative values.")
+
+    if (df["home_shots_on_target"] > df["home_shots"]).any():
+        raise ValueError("Home shots on target cannot exceed total home shots.")
+
+    if (df["away_shots_on_target"] > df["away_shots"]).any():
+        raise ValueError("Away shots on target cannot exceed total away shots.")
+
     df.to_csv(CLEAN, index=False, encoding="utf-8-sig")
     print(f"Prepared {len(df)} matches; saved {CLEAN}")
     return df
+
 
 
 def engine_for(database, password):
